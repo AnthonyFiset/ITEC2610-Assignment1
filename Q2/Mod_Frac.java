@@ -11,12 +11,13 @@ class Mod_Frac {
         this.denominator = denominator;
         System.out.println("Your Numerator is: " +  numerator);
         System.out.println("Your Denominator is: " + denominator);
+        System.out.println("Fraction is: " + numerator + "/" + denominator);
     }
 
     //Part B
 
     public Mod_Frac(double number) {
-        
+
     }
 
 }
