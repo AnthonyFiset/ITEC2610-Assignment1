@@ -1,5 +1,3 @@
-import java.math.*;
-
 class Mod_Frac {
     
     //Part A
@@ -19,42 +17,59 @@ class Mod_Frac {
     //Part B
 
     public Mod_Frac(double number) {
-        String string = Double.toString(number);
-        int digitsDec = string.length() - 1 - string.indexOf('.');
+    // Convert the decimal to a string to get the numerator and denominator
+    String str = Double.toString(number);
+    int index = str.indexOf('.');
+    int denominator = (int) Math.pow(10, str.length() - index - 1);
+    int numerator = (int) (number * denominator);
 
-        int denom = 1;
-        for (int i = 0; i < digitsDec; i++) {
-            number *= 10;
-            denom *= 10;
-        }
+    // Simplify the fraction
+    int gcd = getGCD(numerator, denominator);
+    this.numerator = numerator / gcd;
+    this.denominator = denominator / gcd;
 
-        int num = (int)Math.round(number);
+    System.out.println("The Fraction: " + numerator + "/" + denominator);
 
-
-        this.numerator = num;
-        this.denominator = denom;
-
-        System.out.println("The Fraction: " + num + "/" + denom);
-
-    }
+    System.out.println("The Fraction Simplified: " + this.numerator + "/" + this.denominator);
+  }
 
     //Getting the GCD
 
-    public int getGCD(int x, int y) {
-
-        int i, gcd = 1;
-
-        for(i = Math.min(x, y); i > 1; i--) {
-
-            if(x % i == 0 && y % i == 0) {
-                gcd = i;
-                return gcd;
-            }
-
+    public int getGCD(int a, int b) {
+        if (b == 0) {
+            return a;
         }
+        return getGCD(b, a % b);
+    }
 
-        return gcd;
+    //Part C
 
+    //Fraction to decimal
+    
+    public double toDecimal(int numerator, int denominator) {
+        double decimal = (double) numerator / denominator;
+        this.numerator = numerator;
+        this.denominator = denominator;
+        System.out.println("The Decimal: " + decimal);
+        return decimal;
+    }
+
+    //Part D
+
+    //Addition
+
+    public Mod_Frac add(Mod_Frac other) {
+        int newNumerator = this.numerator * other.denominator + this.denominator * other.numerator;
+        int newDenominator = this.denominator * other.denominator;
+        return new Mod_Frac(newNumerator, newDenominator);
+    }
+
+    //Subtraction
+
+    public Mod_Frac subtract(Mod_Frac other) {
+        int newNumerator = this.numerator * other.denominator - this.denominator * other.numerator;
+        int newDenominator = this.denominator * other.denominator;
+        return new Mod_Frac(newNumerator, newDenominator);
     }
 
 }
